@@ -1,13 +1,14 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { NoPrice, type Material } from "../definitions/MaterialDefinitions";
-import { forEach, type Tile } from "../utilities/Helper";
+import { forEach, mapSafePush, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { getBuildingValue } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
+import { getTypeBuildings } from "./IntraTickCache";
 import type { IBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
 import type { TileAndRes } from "./Update";
 
@@ -24,7 +25,7 @@ export interface IResourceImportBuildingIndex {
 }
 
 interface ITickData {
-   buildingMultipliers: Map<Building, MultiplierWithSource[]>;
+   _buildingMultipliers: Map<Building, MultiplierWithSource[]>;
    tileMultipliers: Map<Tile, MultiplierWithSource[]>;
    unlockedBuildings: Set<Building>;
    workersAvailable: Map<Material, number>;
@@ -49,6 +50,7 @@ interface ITickData {
    powerBuildings: Set<Tile>;
    happinessExemptions: Set<Tile>;
    totalValue: number;
+   totalBuildingValue: number;
    resourceAmount: Map<Material, number>;
    resourceValues: Map<Material, number>;
    buildingValues: Map<Building, number>;
@@ -63,7 +65,7 @@ export function EmptyTickData(): ITickData {
       electrified: new Map(),
       notEnoughPower: new Set(),
       levelBoost: new Map(),
-      buildingMultipliers: new Map(),
+      _buildingMultipliers: new Map(),
       unlockedBuildings: new Set(),
       tileMultipliers: new Map(),
       workersAvailable: new Map(),
@@ -85,6 +87,7 @@ export function EmptyTickData(): ITickData {
       powerBuildings: new Set(),
       happinessExemptions: new Set(),
       totalValue: 0,
+      totalBuildingValue: 0,
       resourceAmount: new Map(),
       resourceValues: new Map(),
       buildingValues: new Map(),
@@ -108,26 +111,27 @@ export enum NotProducingReason {
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];
-   sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
-   builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
+   sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: $t(L.BaseProduction) }];
+   builderCapacity: IValueWithSource[] = [{ value: 1, source: $t(L.BaseMultiplier) }];
    transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
-   input: IValueWithSource[] = [];
+   // These values are added to each tile.
    output: IValueWithSource[] = [];
    worker: IValueWithSource[] = [];
    storage: IValueWithSource[] = [];
+   levelBoost: IValueWithSource[] = [];
 }
 
 export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string> = {
-   sciencePerBusyWorker: () => t(L.ScienceFromBusyWorkers),
-   sciencePerIdleWorker: () => t(L.ScienceFromIdleWorkers),
-   builderCapacity: () => t(L.BuilderCapacity),
-   happiness: () => t(L.Happiness),
-   transportCapacity: () => t(L.TransportCapacity),
-   input: () => t(L.ConsumptionMultiplier),
-   output: () => t(L.ProductionMultiplier),
-   worker: () => t(L.WorkerCapacityMultiplier),
-   storage: () => t(L.StorageMultiplier),
+   sciencePerBusyWorker: () => $t(L.ScienceFromBusyWorkers),
+   sciencePerIdleWorker: () => $t(L.ScienceFromIdleWorkers),
+   builderCapacity: () => $t(L.BuilderCapacity),
+   happiness: () => $t(L.Happiness),
+   transportCapacity: () => $t(L.TransportCapacity),
+   output: () => $t(L.ProductionMultiplier),
+   worker: () => $t(L.WorkerCapacityMultiplier),
+   storage: () => $t(L.StorageMultiplier),
+   levelBoost: () => $t(L.LevelBoost),
 };
 
 export function freezeTickData(t: ITickData): ITickData {
@@ -164,9 +168,9 @@ export const AllMultiplierTypes = ["output", "worker", "storage"] satisfies (key
 
 export type MultiplierType = keyof IMultiplier;
 export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
-   output: () => t(L.ProductionMultiplier),
-   worker: () => t(L.WorkerMultiplier),
-   storage: () => t(L.StorageMultiplier),
+   output: () => $t(L.ProductionMultiplier),
+   worker: () => $t(L.WorkerMultiplier),
+   storage: () => $t(L.StorageMultiplier),
 };
 
 export interface IValueWithSource {
@@ -190,4 +194,19 @@ export function totalEmpireValue(gs: GameState): number {
       }
    });
    return value;
+}
+
+export function calculateCurrentTick(tick: ITickData, gs: GameState): void {
+   getTypeBuildings(gs).forEach((buildings, type) => {
+      const multipliers = tick._buildingMultipliers.get(type);
+      const levelBoost = tick.globalMultipliers.levelBoost;
+      buildings.forEach((building) => {
+         multipliers?.forEach((m) => {
+            mapSafePush(tick.tileMultipliers, building.tile, m);
+         });
+         levelBoost.forEach((m) => {
+            mapSafePush(tick.levelBoost, building.tile, m);
+         });
+      });
+   });
 }

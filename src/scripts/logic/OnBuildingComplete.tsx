@@ -29,7 +29,7 @@ import {
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding, type IBuildingData } from "../../../shared/logic/Tile";
-import { OnBuildingComplete } from "../../../shared/logic/Update";
+import { clearTransportSourceCache, OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    clamp,
    filterOf,
@@ -59,6 +59,8 @@ export function onBuildingComplete(xy: Tile): void {
    if (!building) {
       return;
    }
+
+   clearTransportSourceCache();
 
    const grid = getGrid(gs);
    switch (building.type) {
@@ -118,13 +120,13 @@ export function onBuildingComplete(xy: Tile): void {
          const tech = getMostAdvancedTech(gs);
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (tech && hq) {
-            safeAdd(hq, "Science", getTechUnlockCost(tech));
+            safeAdd(hq, "Science", getTechUnlockCost(tech, gs));
          }
          break;
       }
       case "CologneCathedral": {
          const age = getCurrentAge(gs);
-         const [_, max] = getTechUnlockCostInAge(age);
+         const [_, max] = getTechUnlockCostInAge(age, gs);
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (hq) {
             safeAdd(hq, "Science", max);

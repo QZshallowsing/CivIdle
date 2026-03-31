@@ -6,7 +6,7 @@ import type { MultiplierType, MultiplierWithStability } from "../logic/TickLogic
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
 import { formatNumber, hasFlag, mapSafePush } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { City } from "./CityDefinitions";
 import type { TechAge } from "./TechDefinitions";
@@ -15,7 +15,7 @@ export class GreatPersonDefinitions {
    // Bronze /////////////////////////////////////////////////////////////////////////////////////////////////
 
    Hammurabi: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Hammurabi),
+      name: () => $t(L.Hammurabi),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["House", "Hut"],
@@ -27,8 +27,8 @@ export class GreatPersonDefinitions {
    });
 
    RamessesII: IGreatPersonDefinition = {
-      name: () => t(L.RamessesII),
-      desc: (self, level) => t(L.RamessesIIDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.RamessesII),
+      desc: (self, level) => $t(L.RamessesIIDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 1300s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -43,8 +43,8 @@ export class GreatPersonDefinitions {
    };
 
    TangOfShang: IGreatPersonDefinition = {
-      name: () => t(L.TangOfShang),
-      desc: (self, level) => t(L.TangOfShangDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.TangOfShang),
+      desc: (self, level) => $t(L.TangOfShangDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 1600s BC",
       value: (level) => level * 0.5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -59,7 +59,7 @@ export class GreatPersonDefinitions {
    };
 
    Hatshepsut: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Hatshepsut),
+      name: () => $t(L.Hatshepsut),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Aqueduct", "Brickworks"],
@@ -71,7 +71,7 @@ export class GreatPersonDefinitions {
    });
 
    SargonOfAkkad: IGreatPersonDefinition = boostOf({
-      name: () => t(L.SargonOfAkkad),
+      name: () => $t(L.SargonOfAkkad),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["LoggingCamp", "LumberMill"],
@@ -83,9 +83,9 @@ export class GreatPersonDefinitions {
    });
 
    Narmer: IGreatPersonDefinition = {
-      name: () => t(L.Narmer),
+      name: () => $t(L.Narmer),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -100,7 +100,7 @@ export class GreatPersonDefinitions {
    // Iron ///////////////////////////////////////////////////////////////////////////////////////////////////
 
    Agamemnon: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Agamemnon),
+      name: () => $t(L.Agamemnon),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["StoneQuarry", "Marbleworks"],
@@ -112,7 +112,7 @@ export class GreatPersonDefinitions {
    });
 
    DukeOfZhou: IGreatPersonDefinition = boostOf({
-      name: () => t(L.DukeOfZhou),
+      name: () => $t(L.DukeOfZhou),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CopperMiningCamp", "Blacksmith"],
@@ -124,7 +124,7 @@ export class GreatPersonDefinitions {
    });
 
    Dido: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Dido),
+      name: () => $t(L.Dido),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["DairyFarm", "PoultryFarm"],
@@ -136,7 +136,7 @@ export class GreatPersonDefinitions {
    });
 
    Zoroaster: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Zoroaster),
+      name: () => $t(L.Zoroaster),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CottonPlantation", "CottonMill"],
@@ -148,7 +148,7 @@ export class GreatPersonDefinitions {
    });
 
    Samsuiluna: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Samsuiluna),
+      name: () => $t(L.Samsuiluna),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Marbleworks"],
@@ -161,9 +161,9 @@ export class GreatPersonDefinitions {
    });
 
    KingDavid: IGreatPersonDefinition = {
-      name: () => t(L.KingDavid),
+      name: () => $t(L.KingDavid),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -178,7 +178,7 @@ export class GreatPersonDefinitions {
    // Classical //////////////////////////////////////////////////////////////////////////////////////////////
 
    Aeschylus: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Aeschylus),
+      name: () => $t(L.Aeschylus),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["FlourMill", "Bakery"],
@@ -190,7 +190,7 @@ export class GreatPersonDefinitions {
    });
 
    Ashurbanipal: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Ashurbanipal),
+      name: () => $t(L.Ashurbanipal),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Sandpit", "Glassworks"],
@@ -202,7 +202,7 @@ export class GreatPersonDefinitions {
    });
 
    NebuchadnezzarII: IGreatPersonDefinition = boostOf({
-      name: () => t(L.NebuchadnezzarII),
+      name: () => $t(L.NebuchadnezzarII),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["WheatFarm", "Brewery"],
@@ -214,7 +214,7 @@ export class GreatPersonDefinitions {
    });
 
    Herodotus: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Herodotus),
+      name: () => $t(L.Herodotus),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["PaperMaker", "MusiciansGuild"],
@@ -226,7 +226,7 @@ export class GreatPersonDefinitions {
    });
 
    CyrusII: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CyrusII),
+      name: () => $t(L.CyrusII),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["IronMiningCamp", "IronForge"],
@@ -238,8 +238,8 @@ export class GreatPersonDefinitions {
    });
 
    Socrates: IGreatPersonDefinition = {
-      name: () => t(L.Socrates),
-      desc: (self, level) => t(L.SocratesDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.Socrates),
+      desc: (self, level) => $t(L.SocratesDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -254,8 +254,8 @@ export class GreatPersonDefinitions {
    };
 
    Aristophanes: IGreatPersonDefinition = {
-      name: () => t(L.Aristophanes),
-      desc: (self, level) => t(L.AristophanesDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.Aristophanes),
+      desc: (self, level) => $t(L.AristophanesDesc, { value: formatNumber(self.value(level)) }),
       time: "446 ~ 386 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -267,8 +267,8 @@ export class GreatPersonDefinitions {
    };
 
    Confucius: IGreatPersonDefinition = {
-      name: () => t(L.Confucius),
-      desc: (self, level) => t(L.ConfuciusDescV2, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.Confucius),
+      desc: (self, level) => $t(L.ConfuciusDescV2, { value: formatNumber(self.value(level)) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -280,7 +280,7 @@ export class GreatPersonDefinitions {
    };
 
    Homer: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Homer),
+      name: () => $t(L.Homer),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Stable", "PoetrySchool"],
@@ -291,8 +291,38 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
    });
 
+   HannoTheNavigator: IGreatPersonDefinition = {
+      name: () => $t(L.HannoTheNavigator),
+      desc: (self, level) => $t(L.WuZetianDesc, { value: formatNumber(self.value(level)) }),
+      time: "c. 500s BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.transportCapacity.push({
+            value: Config.GreatPerson[self].value(level),
+            source,
+         });
+      },
+      type: GreatPersonType.Normal,
+      city: "Carthaginian",
+   };
+
+   Hannibal: IGreatPersonDefinition = boostOf({
+      name: () => $t(L.Hannibal),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["SiegeWorkshop", "SwordForge"],
+      },
+      time: "246 ~ 183 BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      city: "Carthaginian",
+   });
+
    Aristotle: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Aristotle),
+      name: () => $t(L.Aristotle),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Library"],
@@ -305,7 +335,7 @@ export class GreatPersonDefinitions {
    });
 
    JuliusCaesar: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JuliusCaesar),
+      name: () => $t(L.JuliusCaesar),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["GoldMiningCamp"],
@@ -318,7 +348,7 @@ export class GreatPersonDefinitions {
    });
 
    Archimedes: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Archimedes),
+      name: () => $t(L.Archimedes),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Caravansary", "Warehouse"],
@@ -330,7 +360,7 @@ export class GreatPersonDefinitions {
    });
 
    EmperorWuOfHan: IGreatPersonDefinition = boostOf({
-      name: () => t(L.EmperorWuOfHan),
+      name: () => $t(L.EmperorWuOfHan),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Caravansary"],
@@ -343,7 +373,7 @@ export class GreatPersonDefinitions {
    });
 
    QinShiHuang: IGreatPersonDefinition = boostOf({
-      name: () => t(L.QinShiHuang),
+      name: () => $t(L.QinShiHuang),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["ChariotWorkshop", "Armory"],
@@ -355,7 +385,7 @@ export class GreatPersonDefinitions {
    });
 
    Cleopatra: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Cleopatra),
+      name: () => $t(L.Cleopatra),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Shrine"],
@@ -368,8 +398,8 @@ export class GreatPersonDefinitions {
    });
 
    Zenobia: IGreatPersonDefinition = {
-      name: () => t(L.Zenobia),
-      desc: (self, level) => t(L.ZenobiaDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.Zenobia),
+      desc: (self, level) => $t(L.ZenobiaDesc, { value: formatNumber(self.value(level)) }),
       time: "240 ~ 274 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -379,8 +409,8 @@ export class GreatPersonDefinitions {
    };
 
    Plato: IGreatPersonDefinition = {
-      name: () => t(L.Plato),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.Plato),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "427 ~ 348 BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -390,8 +420,8 @@ export class GreatPersonDefinitions {
    };
 
    AshokaTheGreat: IGreatPersonDefinition = {
-      name: () => t(L.AshokaTheGreat),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.AshokaTheGreat),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "304 ~ 232 BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -401,9 +431,9 @@ export class GreatPersonDefinitions {
    };
 
    Laozi: IGreatPersonDefinition = {
-      name: () => t(L.Laozi),
+      name: () => $t(L.Laozi),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -418,7 +448,7 @@ export class GreatPersonDefinitions {
    // Middle Age /////////////////////////////////////////////////////////////////////////////////////////////
 
    Justinian: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Justinian),
+      name: () => $t(L.Justinian),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["FurnitureWorkshop", "GarmentWorkshop"],
@@ -430,8 +460,8 @@ export class GreatPersonDefinitions {
    });
 
    IsidoreOfMiletus: IGreatPersonDefinition = {
-      name: () => t(L.IsidoreOfMiletus),
-      desc: (self, level) => t(L.IsidoreOfMiletusDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.IsidoreOfMiletus),
+      desc: (self, level) => $t(L.IsidoreOfMiletusDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 500 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -446,7 +476,7 @@ export class GreatPersonDefinitions {
    };
 
    Charlemagne: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Charlemagne),
+      name: () => $t(L.Charlemagne),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SwordForge", "KnightCamp"],
@@ -458,7 +488,7 @@ export class GreatPersonDefinitions {
    });
 
    HarunAlRashid: IGreatPersonDefinition = boostOf({
-      name: () => t(L.HarunAlRashid),
+      name: () => $t(L.HarunAlRashid),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CheeseMaker", "Mosque"],
@@ -470,8 +500,8 @@ export class GreatPersonDefinitions {
    });
 
    WuZetian: IGreatPersonDefinition = {
-      name: () => t(L.WuZetian),
-      desc: (self, level) => t(L.WuZetianDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.WuZetian),
+      desc: (self, level) => $t(L.WuZetianDesc, { value: formatNumber(self.value(level)) }),
       time: "624 ~ 705 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -486,7 +516,7 @@ export class GreatPersonDefinitions {
    };
 
    Xuanzang: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Xuanzang),
+      name: () => $t(L.Xuanzang),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Library", "Pagoda"],
@@ -498,8 +528,8 @@ export class GreatPersonDefinitions {
    });
 
    Rurik: IGreatPersonDefinition = {
-      name: () => t(L.Rurik),
-      desc: (self, level) => t(L.RurikDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.Rurik),
+      desc: (self, level) => $t(L.RurikDesc, { value: formatNumber(self.value(level)) }),
       time: "624 ~ 705 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -511,9 +541,9 @@ export class GreatPersonDefinitions {
    };
 
    Fibonacci: IGreatPersonDefinition = {
-      name: () => t(L.Fibonacci),
+      name: () => $t(L.Fibonacci),
       desc: (self, level) =>
-         t(L.FibonacciDescV2, {
+         $t(L.FibonacciDescV2, {
             idle: formatNumber(self.value(level) / 2),
             busy: formatNumber(self.value(level)),
          }),
@@ -535,8 +565,8 @@ export class GreatPersonDefinitions {
    };
 
    Saladin: IGreatPersonDefinition = {
-      name: () => t(L.Saladin),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.Saladin),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1137 ~ 1193 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -546,8 +576,8 @@ export class GreatPersonDefinitions {
    };
 
    MarcoPolo: IGreatPersonDefinition = {
-      name: () => t(L.MarcoPolo),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.MarcoPolo),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "1254 ~ 1324 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -557,9 +587,9 @@ export class GreatPersonDefinitions {
    };
 
    GenghisKhan: IGreatPersonDefinition = {
-      name: () => t(L.GenghisKhan),
+      name: () => $t(L.GenghisKhan),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -574,7 +604,7 @@ export class GreatPersonDefinitions {
    // Renaissance ////////////////////////////////////////////////////////////////////////////////////////////
 
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
-      name: () => t(L.LeonardoDaVinci),
+      name: () => $t(L.LeonardoDaVinci),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["PaintersGuild", "University"],
@@ -586,7 +616,7 @@ export class GreatPersonDefinitions {
    });
 
    JohannesKepler: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JohannesKepler),
+      name: () => $t(L.JohannesKepler),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Shrine", "LensWorkshop"],
@@ -598,8 +628,8 @@ export class GreatPersonDefinitions {
    });
 
    GalileoGalilei: IGreatPersonDefinition = {
-      name: () => t(L.GalileoGalilei),
-      desc: (self, level) => t(L.GalileoGalileiDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.GalileoGalilei),
+      desc: (self, level) => $t(L.GalileoGalileiDesc, { value: formatNumber(self.value(level)) }),
       time: "1564 ~ 1642 AD",
       value: (level) => level * 1,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -614,7 +644,7 @@ export class GreatPersonDefinitions {
    };
 
    MartinLuther: IGreatPersonDefinition = boostOf({
-      name: () => t(L.MartinLuther),
+      name: () => $t(L.MartinLuther),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Church", "School"],
@@ -626,7 +656,7 @@ export class GreatPersonDefinitions {
    });
 
    OdaNobunaga: IGreatPersonDefinition = boostOf({
-      name: () => t(L.OdaNobunaga),
+      name: () => $t(L.OdaNobunaga),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["FrigateBuilder"],
@@ -639,7 +669,7 @@ export class GreatPersonDefinitions {
    });
 
    WilliamShakespeare: IGreatPersonDefinition = boostOf({
-      name: () => t(L.WilliamShakespeare),
+      name: () => $t(L.WilliamShakespeare),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["WritersGuild", "ActorsGuild"],
@@ -651,7 +681,7 @@ export class GreatPersonDefinitions {
    });
 
    ReneDescartes: IGreatPersonDefinition = boostOf({
-      name: () => t(L.ReneDescartes),
+      name: () => $t(L.ReneDescartes),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["School"],
@@ -663,7 +693,7 @@ export class GreatPersonDefinitions {
    });
 
    ZhengHe: IGreatPersonDefinition = boostOf({
-      name: () => t(L.ZhengHe),
+      name: () => $t(L.ZhengHe),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CaravelBuilder", "GalleonBuilder"],
@@ -675,7 +705,7 @@ export class GreatPersonDefinitions {
    });
 
    CosimoDeMedici: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CosimoDeMedici),
+      name: () => $t(L.CosimoDeMedici),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["GoldMiningCamp", "CoinMint"],
@@ -687,8 +717,8 @@ export class GreatPersonDefinitions {
    });
 
    IsaacNewton: IGreatPersonDefinition = {
-      name: () => t(L.IsaacNewton),
-      desc: (self, level) => t(L.IsaacNewtonDescV2, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.IsaacNewton),
+      desc: (self, level) => $t(L.IsaacNewtonDescV2, { value: formatNumber(self.value(level)) }),
       time: "1642 ~ 1727 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -700,7 +730,7 @@ export class GreatPersonDefinitions {
    };
 
    GeorgiusAgricola: IGreatPersonDefinition = boostOf({
-      name: () => t(L.GeorgiusAgricola),
+      name: () => $t(L.GeorgiusAgricola),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SiegeWorkshop", "CoalMine"],
@@ -712,7 +742,7 @@ export class GreatPersonDefinitions {
    });
 
    Voltaire: IGreatPersonDefinition = boostOf({
-      name: () => t(L.Voltaire),
+      name: () => $t(L.Voltaire),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Museum"],
@@ -725,8 +755,8 @@ export class GreatPersonDefinitions {
    });
 
    Michelangelo: IGreatPersonDefinition = {
-      name: () => t(L.Michelangelo),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.Michelangelo),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1475 ~ 1564 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -736,8 +766,8 @@ export class GreatPersonDefinitions {
    };
 
    JohannesGutenberg: IGreatPersonDefinition = {
-      name: () => t(L.JohannesGutenberg),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.JohannesGutenberg),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "1393 ~ 1406 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -747,7 +777,7 @@ export class GreatPersonDefinitions {
    };
 
    ThomasGresham: IGreatPersonDefinition = boostOf({
-      name: () => t(L.ThomasGresham),
+      name: () => $t(L.ThomasGresham),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["BondMarket"],
@@ -760,7 +790,7 @@ export class GreatPersonDefinitions {
    });
 
    SuleimanI: IGreatPersonDefinition = boostOf({
-      name: () => t(L.SuleimanI),
+      name: () => $t(L.SuleimanI),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Bank"],
@@ -773,9 +803,9 @@ export class GreatPersonDefinitions {
    });
 
    ChristopherColumbus: IGreatPersonDefinition = {
-      name: () => t(L.ChristopherColumbus),
+      name: () => $t(L.ChristopherColumbus),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -790,7 +820,7 @@ export class GreatPersonDefinitions {
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
 
    JamesWatt: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JamesWatt),
+      name: () => $t(L.JamesWatt),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Steamworks", "DynamiteWorkshop"],
@@ -802,7 +832,7 @@ export class GreatPersonDefinitions {
    });
 
    IsambardKingdomBrunel: IGreatPersonDefinition = boostOf({
-      name: () => t(L.IsambardKingdomBrunel),
+      name: () => $t(L.IsambardKingdomBrunel),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["FrigateBuilder", "ConcretePlant"],
@@ -814,7 +844,7 @@ export class GreatPersonDefinitions {
    });
 
    GeorgeWashington: IGreatPersonDefinition = boostOf({
-      name: () => t(L.GeorgeWashington),
+      name: () => $t(L.GeorgeWashington),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Parliament"],
@@ -827,8 +857,8 @@ export class GreatPersonDefinitions {
    });
 
    LouisSullivan: IGreatPersonDefinition = {
-      name: () => t(L.LouisSullivan),
-      desc: (self, level) => t(L.LouisSullivanDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.LouisSullivan),
+      desc: (self, level) => $t(L.LouisSullivanDesc, { value: formatNumber(self.value(level)) }),
       time: "1856 ~ 1924 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -843,7 +873,7 @@ export class GreatPersonDefinitions {
    };
 
    KarlMarx: IGreatPersonDefinition = boostOf({
-      name: () => t(L.KarlMarx),
+      name: () => $t(L.KarlMarx),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Courthouse", "Parliament"],
@@ -855,7 +885,7 @@ export class GreatPersonDefinitions {
    });
 
    AdaLovelace: IGreatPersonDefinition = boostOf({
-      name: () => t(L.AdaLovelace),
+      name: () => $t(L.AdaLovelace),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["PrintingHouse", "Museum"],
@@ -867,7 +897,7 @@ export class GreatPersonDefinitions {
    });
 
    NapoleonBonaparte: IGreatPersonDefinition = boostOf({
-      name: () => t(L.NapoleonBonaparte),
+      name: () => $t(L.NapoleonBonaparte),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CannonWorkshop", "GunpowderMill"],
@@ -879,8 +909,8 @@ export class GreatPersonDefinitions {
    });
 
    CharlesDarwin: IGreatPersonDefinition = {
-      name: () => t(L.CharlesDarwin),
-      desc: (self, level) => t(L.CharlesDarwinDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.CharlesDarwin),
+      desc: (self, level) => $t(L.CharlesDarwinDesc, { value: formatNumber(self.value(level)) }),
       time: "1809 ~ 1882 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -895,9 +925,9 @@ export class GreatPersonDefinitions {
    };
 
    CarlFriedrichGauss: IGreatPersonDefinition = {
-      name: () => t(L.CarlFriedrichGauss),
+      name: () => $t(L.CarlFriedrichGauss),
       desc: (self, level) =>
-         t(L.CarlFriedrichGaussDesc, {
+         $t(L.CarlFriedrichGaussDesc, {
             idle: formatNumber(0.5 * self.value(level)),
             busy: formatNumber(1.5 * self.value(level)),
          }),
@@ -919,8 +949,8 @@ export class GreatPersonDefinitions {
    };
 
    FlorenceNightingale: IGreatPersonDefinition = {
-      name: () => t(L.FlorenceNightingale),
-      desc: (self, level) => t(L.FlorenceNightingaleDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.FlorenceNightingale),
+      desc: (self, level) => $t(L.FlorenceNightingaleDesc, { value: formatNumber(self.value(level)) }),
       time: "1820 ~ 1910 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -935,7 +965,7 @@ export class GreatPersonDefinitions {
    };
 
    JPMorgan: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JPMorgan),
+      name: () => $t(L.JPMorgan),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["BondMarket", "RifleFactory"],
@@ -947,7 +977,7 @@ export class GreatPersonDefinitions {
    });
 
    AndrewCarnegie: IGreatPersonDefinition = boostOf({
-      name: () => t(L.AndrewCarnegie),
+      name: () => $t(L.AndrewCarnegie),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Bank", "SteelMill"],
@@ -959,9 +989,9 @@ export class GreatPersonDefinitions {
    });
 
    AkbarTheGreat: IGreatPersonDefinition = {
-      name: () => t(L.AkbarTheGreat),
+      name: () => $t(L.AkbarTheGreat),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.RedFort.name(),
          }),
@@ -975,8 +1005,8 @@ export class GreatPersonDefinitions {
    };
 
    ThomasEdison: IGreatPersonDefinition = {
-      name: () => t(L.ThomasEdison),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.ThomasEdison),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1847 ~ 1931 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -986,8 +1016,8 @@ export class GreatPersonDefinitions {
    };
 
    AdamSmith: IGreatPersonDefinition = {
-      name: () => t(L.AdamSmith),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.AdamSmith),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "1723 ~ 1790 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -997,9 +1027,9 @@ export class GreatPersonDefinitions {
    };
 
    MichaelFaraday: IGreatPersonDefinition = {
-      name: () => t(L.MichaelFaraday),
+      name: () => $t(L.MichaelFaraday),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -1012,9 +1042,9 @@ export class GreatPersonDefinitions {
    };
 
    Beethoven: IGreatPersonDefinition = {
-      name: () => t(L.Beethoven),
+      name: () => $t(L.Beethoven),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.CologneCathedral.name(),
          }),
@@ -1028,9 +1058,9 @@ export class GreatPersonDefinitions {
    };
 
    Tchaikovsky: IGreatPersonDefinition = {
-      name: () => t(L.Tchaikovsky),
+      name: () => $t(L.Tchaikovsky),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.Hermitage.name(),
          }),
@@ -1046,7 +1076,7 @@ export class GreatPersonDefinitions {
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JohnDRockefeller: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JohnDRockefeller),
+      name: () => $t(L.JohnDRockefeller),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["OilWell", "StockExchange"],
@@ -1058,7 +1088,7 @@ export class GreatPersonDefinitions {
    });
 
    RudolfDiesel: IGreatPersonDefinition = boostOf({
-      name: () => t(L.RudolfDiesel),
+      name: () => $t(L.RudolfDiesel),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["OilRefinery", "LocomotiveFactory"],
@@ -1070,7 +1100,7 @@ export class GreatPersonDefinitions {
    });
 
    PierreDeCoubertin: IGreatPersonDefinition = boostOf({
-      name: () => t(L.PierreDeCoubertin),
+      name: () => $t(L.PierreDeCoubertin),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["PublishingHouse", "Stadium"],
@@ -1082,7 +1112,7 @@ export class GreatPersonDefinitions {
    });
 
    CharlesParsons: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CharlesParsons),
+      name: () => $t(L.CharlesParsons),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CoalPowerPlant", "IroncladBuilder"],
@@ -1094,7 +1124,7 @@ export class GreatPersonDefinitions {
    });
 
    RichardJordanGatling: IGreatPersonDefinition = boostOf({
-      name: () => t(L.RichardJordanGatling),
+      name: () => $t(L.RichardJordanGatling),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["GatlingGunFactory", "TankFactory"],
@@ -1106,7 +1136,7 @@ export class GreatPersonDefinitions {
    });
 
    JosephPulitzer: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JosephPulitzer),
+      name: () => $t(L.JosephPulitzer),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["MagazinePublisher", "Pizzeria"],
@@ -1118,7 +1148,7 @@ export class GreatPersonDefinitions {
    });
 
    CharlesMartinHall: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CharlesMartinHall),
+      name: () => $t(L.CharlesMartinHall),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["NaturalGasWell", "AluminumSmelter"],
@@ -1130,7 +1160,7 @@ export class GreatPersonDefinitions {
    });
 
    MarieCurie: IGreatPersonDefinition = boostOf({
-      name: () => t(L.MarieCurie),
+      name: () => $t(L.MarieCurie),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CableFactory", "UraniumMine"],
@@ -1142,7 +1172,7 @@ export class GreatPersonDefinitions {
    });
 
    AlbertEinstein: IGreatPersonDefinition = boostOf({
-      name: () => t(L.AlbertEinstein),
+      name: () => $t(L.AlbertEinstein),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["ResearchLab"],
@@ -1154,8 +1184,8 @@ export class GreatPersonDefinitions {
    });
 
    AlanTuring: IGreatPersonDefinition = {
-      name: () => t(L.AlanTuring),
-      desc: (self, level) => t(L.AlanTuringDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.AlanTuring),
+      desc: (self, level) => $t(L.AlanTuringDesc, { value: formatNumber(self.value(level)) }),
       time: "1912 ~ 1954 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1170,8 +1200,8 @@ export class GreatPersonDefinitions {
    };
 
    NielsBohr: IGreatPersonDefinition = {
-      name: () => t(L.NielsBohr),
-      desc: (self, level) => t(L.NielsBohrDescV2, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.NielsBohr),
+      desc: (self, level) => $t(L.NielsBohrDescV2, { value: formatNumber(self.value(level)) }),
       time: "1885 ~ 1962 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1183,7 +1213,7 @@ export class GreatPersonDefinitions {
    };
 
    AmeliaEarhart: IGreatPersonDefinition = boostOf({
-      name: () => t(L.AmeliaEarhart),
+      name: () => $t(L.AmeliaEarhart),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["BiplaneFactory", "GasPowerPlant"],
@@ -1195,7 +1225,7 @@ export class GreatPersonDefinitions {
    });
 
    HenryFord: IGreatPersonDefinition = boostOf({
-      name: () => t(L.HenryFord),
+      name: () => $t(L.HenryFord),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CarFactory", "PlasticsFactory", "GasPlasticsPlant"],
@@ -1207,7 +1237,7 @@ export class GreatPersonDefinitions {
    });
 
    JosephMonier: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JosephMonier),
+      name: () => $t(L.JosephMonier),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["RebarPlant", "ReinforcedConcretePlant"],
@@ -1219,7 +1249,7 @@ export class GreatPersonDefinitions {
    });
 
    OttoVonBismarck: IGreatPersonDefinition = boostOf({
-      name: () => t(L.OttoVonBismarck),
+      name: () => $t(L.OttoVonBismarck),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["BattleshipBuilder"],
@@ -1232,8 +1262,8 @@ export class GreatPersonDefinitions {
    });
 
    MahatmaGandhi: IGreatPersonDefinition = {
-      name: () => t(L.MahatmaGandhi),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.MahatmaGandhi),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1869 ~ 1948 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1243,8 +1273,8 @@ export class GreatPersonDefinitions {
    };
 
    PabloPicasso: IGreatPersonDefinition = {
-      name: () => t(L.PabloPicasso),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.PabloPicasso),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "1881 ~ 1973 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1254,8 +1284,8 @@ export class GreatPersonDefinitions {
    };
 
    JohnVonNeumann: IGreatPersonDefinition = {
-      name: () => t(L.JohnVonNeumann),
-      desc: (self, level) => t(L.JohnVonNeumannDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.JohnVonNeumann),
+      desc: (self, level) => $t(L.JohnVonNeumannDesc, { value: formatNumber(self.value(level)) }),
       time: "1903 ~ 1957 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1270,8 +1300,8 @@ export class GreatPersonDefinitions {
    };
 
    CharlieChaplin: IGreatPersonDefinition = {
-      name: () => t(L.CharlieChaplin),
-      desc: (self, level) => t(L.CharlieChaplinDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.CharlieChaplin),
+      desc: (self, level) => $t(L.CharlieChaplinDesc, { value: formatNumber(self.value(level)) }),
       time: "1889 ~ 1977 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1286,8 +1316,8 @@ export class GreatPersonDefinitions {
    };
 
    FrankLloydWright: IGreatPersonDefinition = {
-      name: () => t(L.FrankLloydWright),
-      desc: (self, level) => t(L.FrankLloydWrightDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.FrankLloydWright),
+      desc: (self, level) => $t(L.FrankLloydWrightDesc, { value: formatNumber(self.value(level)) }),
       time: "1867 ~ 1959 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1302,7 +1332,7 @@ export class GreatPersonDefinitions {
    };
 
    HeitorVillaLobos: IGreatPersonDefinition = boostOf({
-      name: () => t(L.HeitorVillaLobos),
+      name: () => $t(L.HeitorVillaLobos),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["RadioStation"],
@@ -1315,7 +1345,7 @@ export class GreatPersonDefinitions {
    });
 
    RabindranathTagore: IGreatPersonDefinition = boostOf({
-      name: () => t(L.RabindranathTagore),
+      name: () => $t(L.RabindranathTagore),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Embassy"],
@@ -1328,9 +1358,9 @@ export class GreatPersonDefinitions {
    });
 
    OskarSchindler: IGreatPersonDefinition = {
-      name: () => t(L.OskarSchindler),
+      name: () => $t(L.OskarSchindler),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -1343,9 +1373,9 @@ export class GreatPersonDefinitions {
    };
 
    JohnBradfield: IGreatPersonDefinition = {
-      name: () => t(L.JohnBradfield),
+      name: () => $t(L.JohnBradfield),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.SydneyHarbourBridge.name(),
          }),
@@ -1361,7 +1391,7 @@ export class GreatPersonDefinitions {
    // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JRobertOppenheimer),
+      name: () => $t(L.JRobertOppenheimer),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["UraniumEnrichmentPlant", "AtomicFacility"],
@@ -1373,7 +1403,7 @@ export class GreatPersonDefinitions {
    });
 
    WaltDisney: IGreatPersonDefinition = boostOf({
-      name: () => t(L.WaltDisney),
+      name: () => $t(L.WaltDisney),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["MovieStudio", "RadioStation"],
@@ -1385,7 +1415,7 @@ export class GreatPersonDefinitions {
    });
 
    WernherVonBraun: IGreatPersonDefinition = boostOf({
-      name: () => t(L.WernherVonBraun),
+      name: () => $t(L.WernherVonBraun),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["RocketFactory", "ArtilleryFactory"],
@@ -1397,7 +1427,7 @@ export class GreatPersonDefinitions {
    });
 
    ChesterWNimitz: IGreatPersonDefinition = boostOf({
-      name: () => t(L.ChesterWNimitz),
+      name: () => $t(L.ChesterWNimitz),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["BattleshipBuilder", "HydroDam"],
@@ -1409,7 +1439,7 @@ export class GreatPersonDefinitions {
    });
 
    FrankWhittle: IGreatPersonDefinition = boostOf({
-      name: () => t(L.FrankWhittle),
+      name: () => $t(L.FrankWhittle),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["AirplaneFactory", "FighterJetPlant"],
@@ -1421,7 +1451,7 @@ export class GreatPersonDefinitions {
    });
 
    EnricoFermi: IGreatPersonDefinition = boostOf({
-      name: () => t(L.EnricoFermi),
+      name: () => $t(L.EnricoFermi),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["NuclearPowerPlant", "SubmarineYard"],
@@ -1433,7 +1463,7 @@ export class GreatPersonDefinitions {
    });
 
    PhiloFarnsworth: IGreatPersonDefinition = boostOf({
-      name: () => t(L.PhiloFarnsworth),
+      name: () => $t(L.PhiloFarnsworth),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["TVStation", "NuclearMissileSilo"],
@@ -1445,7 +1475,7 @@ export class GreatPersonDefinitions {
    });
 
    TerryFox: IGreatPersonDefinition = boostOf({
-      name: () => t(L.TerryFox),
+      name: () => $t(L.TerryFox),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["TVStation"],
@@ -1458,7 +1488,7 @@ export class GreatPersonDefinitions {
    });
 
    SergeiKorolev: IGreatPersonDefinition = boostOf({
-      name: () => t(L.SergeiKorolev),
+      name: () => $t(L.SergeiKorolev),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SatelliteFactory", "SpacecraftFactory"],
@@ -1470,7 +1500,7 @@ export class GreatPersonDefinitions {
    });
 
    GeorgeCMarshall: IGreatPersonDefinition = boostOf({
-      name: () => t(L.GeorgeCMarshall),
+      name: () => $t(L.GeorgeCMarshall),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["Embassy", "ForexMarket"],
@@ -1482,7 +1512,7 @@ export class GreatPersonDefinitions {
    });
 
    RobertNoyce: IGreatPersonDefinition = boostOf({
-      name: () => t(L.RobertNoyce),
+      name: () => $t(L.RobertNoyce),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SemiconductorFab", "SiliconSmelter"],
@@ -1494,7 +1524,7 @@ export class GreatPersonDefinitions {
    });
 
    FriedrichHayek: IGreatPersonDefinition = boostOf({
-      name: () => t(L.FriedrichHayek),
+      name: () => $t(L.FriedrichHayek),
       boost: {
          multipliers: ["output"],
          buildings: ["SwissBank"],
@@ -1506,7 +1536,7 @@ export class GreatPersonDefinitions {
    });
 
    AndreyKolmogorov: IGreatPersonDefinition = boostOf({
-      name: () => t(L.AndreyKolmogorov),
+      name: () => $t(L.AndreyKolmogorov),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SatelliteFactory", "Cosmodrome"],
@@ -1519,9 +1549,9 @@ export class GreatPersonDefinitions {
    });
 
    PaulSamuelson: IGreatPersonDefinition = {
-      name: () => t(L.PaulSamuelson),
+      name: () => $t(L.PaulSamuelson),
       desc: (self, level) =>
-         t(L.BuildingLevelBoostDesc, {
+         $t(L.BuildingLevelBoostDesc, {
             value: formatNumber(self.value(level)),
             building: Config.Building.SwissBank.name(),
          }),
@@ -1542,8 +1572,8 @@ export class GreatPersonDefinitions {
    };
 
    JamesWatson: IGreatPersonDefinition = {
-      name: () => t(L.JamesWatson),
-      desc: (self, level) => t(L.JamesWatsonDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.JamesWatson),
+      desc: (self, level) => $t(L.JamesWatsonDesc, { value: formatNumber(self.value(level)) }),
       time: "1928 ~ ",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1558,8 +1588,8 @@ export class GreatPersonDefinitions {
    };
 
    RichardFeynman: IGreatPersonDefinition = {
-      name: () => t(L.RichardFeynman),
-      desc: (self, level) => t(L.RichardFeynmanDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.RichardFeynman),
+      desc: (self, level) => $t(L.RichardFeynmanDesc, { value: formatNumber(self.value(level)) }),
       time: "1918 ~ 1988 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1571,8 +1601,8 @@ export class GreatPersonDefinitions {
    };
 
    LinusPauling: IGreatPersonDefinition = {
-      name: () => t(L.LinusPauling),
-      desc: (self, level) => t(L.LinusPaulingDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.LinusPauling),
+      desc: (self, level) => $t(L.LinusPaulingDesc, { value: formatNumber(self.value(level)) }),
       time: "1901 ~ 1994 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1587,8 +1617,8 @@ export class GreatPersonDefinitions {
    };
 
    IMPei: IGreatPersonDefinition = {
-      name: () => t(L.IMPei),
-      desc: (self, level) => t(L.IMPeiDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.IMPei),
+      desc: (self, level) => $t(L.IMPeiDesc, { value: formatNumber(self.value(level)) }),
       time: "1917 ~ 2019 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1603,8 +1633,8 @@ export class GreatPersonDefinitions {
    };
 
    BobHope: IGreatPersonDefinition = {
-      name: () => t(L.BobHope),
-      desc: (self, level) => t(L.BobHopeDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.BobHope),
+      desc: (self, level) => $t(L.BobHopeDesc, { value: formatNumber(self.value(level)) }),
       time: "1903 ~ 2003 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1619,8 +1649,8 @@ export class GreatPersonDefinitions {
    };
 
    ElvisPresley: IGreatPersonDefinition = {
-      name: () => t(L.ElvisPresley),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.ElvisPresley),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1935 ~ 1977 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1630,8 +1660,8 @@ export class GreatPersonDefinitions {
    };
 
    YuriGagarin: IGreatPersonDefinition = {
-      name: () => t(L.YuriGagarin),
-      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      name: () => $t(L.YuriGagarin),
+      desc: (self, level) => $t(L.PromotionGreatPersonDescV2),
       time: "1934 ~ 1968 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1641,9 +1671,9 @@ export class GreatPersonDefinitions {
    };
 
    NeilArmstrong: IGreatPersonDefinition = {
-      name: () => t(L.NeilArmstrong),
+      name: () => $t(L.NeilArmstrong),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -1656,9 +1686,9 @@ export class GreatPersonDefinitions {
    };
 
    Pele: IGreatPersonDefinition = {
-      name: () => t(L.Pele),
+      name: () => $t(L.Pele),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.ItaipuDam.name(),
          }),
@@ -1674,7 +1704,7 @@ export class GreatPersonDefinitions {
    // Information ////////////////////////////////////////////////////////////////////////////////////////////
 
    TimBernersLee: IGreatPersonDefinition = boostOf({
-      name: () => t(L.TimBernersLee),
+      name: () => $t(L.TimBernersLee),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["InternetServiceProvider", "OpticalFiberPlant"],
@@ -1686,7 +1716,7 @@ export class GreatPersonDefinitions {
    });
 
    GordonMoore: IGreatPersonDefinition = boostOf({
-      name: () => t(L.GordonMoore),
+      name: () => $t(L.GordonMoore),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["ComputerFactory", "SupercomputerLab"],
@@ -1698,7 +1728,7 @@ export class GreatPersonDefinitions {
    });
 
    DennisRitchie: IGreatPersonDefinition = boostOf({
-      name: () => t(L.DennisRitchie),
+      name: () => $t(L.DennisRitchie),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SoftwareCompany", "MaglevFactory"],
@@ -1710,7 +1740,7 @@ export class GreatPersonDefinitions {
    });
 
    HymanGRickover: IGreatPersonDefinition = boostOf({
-      name: () => t(L.HymanGRickover),
+      name: () => $t(L.HymanGRickover),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["AircraftCarrierYard", "NuclearSubmarineYard"],
@@ -1722,7 +1752,7 @@ export class GreatPersonDefinitions {
    });
 
    HarryMarkowitz: IGreatPersonDefinition = boostOf({
-      name: () => t(L.HarryMarkowitz),
+      name: () => $t(L.HarryMarkowitz),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["MutualFund", "HedgeFund"],
@@ -1734,7 +1764,7 @@ export class GreatPersonDefinitions {
    });
 
    JohnCarmack: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JohnCarmack),
+      name: () => $t(L.JohnCarmack),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["ComputerLab", "CivOasis"],
@@ -1746,7 +1776,7 @@ export class GreatPersonDefinitions {
    });
 
    SatoshiNakamoto: IGreatPersonDefinition = boostOf({
-      name: () => t(L.SatoshiNakamoto),
+      name: () => $t(L.SatoshiNakamoto),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CivTok", "BitcoinMiner"],
@@ -1758,7 +1788,7 @@ export class GreatPersonDefinitions {
    });
 
    CarlSagan: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CarlSagan),
+      name: () => $t(L.CarlSagan),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["SpaceCenter", "Peacekeeper"],
@@ -1770,7 +1800,7 @@ export class GreatPersonDefinitions {
    });
 
    JohnMcCarthy: IGreatPersonDefinition = boostOf({
-      name: () => t(L.JohnMcCarthy),
+      name: () => $t(L.JohnMcCarthy),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CivGPT", "RobocarFactory"],
@@ -1782,7 +1812,7 @@ export class GreatPersonDefinitions {
    });
 
    BrianSchmidt: IGreatPersonDefinition = boostOf({
-      name: () => t(L.BrianSchmidt),
+      name: () => $t(L.BrianSchmidt),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["FusionFuelPlant", "FusionPowerPlant"],
@@ -1795,8 +1825,8 @@ export class GreatPersonDefinitions {
    });
 
    StephenHawking: IGreatPersonDefinition = {
-      name: () => t(L.StephenHawking),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      name: () => $t(L.StephenHawking),
+      desc: (self, level) => $t(L.WildCardGreatPersonDescV2),
       time: "1942 ~ 2018 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1806,8 +1836,8 @@ export class GreatPersonDefinitions {
    };
 
    ZahaHadid: IGreatPersonDefinition = {
-      name: () => t(L.ZahaHadid),
-      desc: (self, level) => t(L.ZahaHadidDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.ZahaHadid),
+      desc: (self, level) => $t(L.ZahaHadidDesc, { value: formatNumber(self.value(level)) }),
       time: "1950 ~ 2016 AD",
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1822,8 +1852,8 @@ export class GreatPersonDefinitions {
    };
 
    PeterHiggs: IGreatPersonDefinition = {
-      name: () => t(L.PeterHiggs),
-      desc: (self, level) => t(L.PeterHiggsDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.PeterHiggs),
+      desc: (self, level) => $t(L.PeterHiggsDesc, { value: formatNumber(self.value(level)) }),
       time: "1929 ~ 2024 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1838,8 +1868,8 @@ export class GreatPersonDefinitions {
    };
 
    GabrielGarciaMarquez: IGreatPersonDefinition = {
-      name: () => t(L.GabrielGarciaMarquez),
-      desc: (self, level) => t(L.GabrielGarciaMarquezDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.GabrielGarciaMarquez),
+      desc: (self, level) => $t(L.GabrielGarciaMarquezDesc, { value: formatNumber(self.value(level)) }),
       time: "1927 ~ 2014 AD",
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1854,8 +1884,8 @@ export class GreatPersonDefinitions {
    };
 
    MaryamMirzakhani: IGreatPersonDefinition = {
-      name: () => t(L.MaryamMirzakhani),
-      desc: (self, level) => t(L.MaryamMirzakhaniDesc, { value: formatNumber(self.value(level)) }),
+      name: () => $t(L.MaryamMirzakhani),
+      desc: (self, level) => $t(L.MaryamMirzakhaniDesc, { value: formatNumber(self.value(level)) }),
       time: "1977 ~ 2017 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1870,9 +1900,9 @@ export class GreatPersonDefinitions {
    };
 
    SidMeier: IGreatPersonDefinition = {
-      name: () => t(L.SidMeier),
+      name: () => $t(L.SidMeier),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, {
+         $t(L.AdaptiveGreatPersonDesc, {
             value: formatNumber(self.value(level)),
             age: Config.TechAge[self.age].name(),
          }),
@@ -1885,9 +1915,9 @@ export class GreatPersonDefinitions {
    };
 
    WilliamShepherd: IGreatPersonDefinition = {
-      name: () => t(L.WilliamShepherd),
+      name: () => $t(L.WilliamShepherd),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.InternationalSpaceStation.name(),
          }),
@@ -1900,9 +1930,9 @@ export class GreatPersonDefinitions {
    };
 
    LeeKuanYew: IGreatPersonDefinition = {
-      name: () => t(L.LeeKuanYew),
+      name: () => $t(L.LeeKuanYew),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.MarinaBaySands.name(),
          }),
@@ -1915,9 +1945,9 @@ export class GreatPersonDefinitions {
    };
 
    EmmanuelleCharpentier: IGreatPersonDefinition = {
-      name: () => t(L.EmmanuelleCharpentier),
+      name: () => $t(L.EmmanuelleCharpentier),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.PalmJumeirah.name(),
          }),
@@ -1930,9 +1960,9 @@ export class GreatPersonDefinitions {
    };
 
    DanAlderson: IGreatPersonDefinition = {
-      name: () => t(L.DanAlderson),
+      name: () => $t(L.DanAlderson),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.AldersonDisk.name(),
          }),
@@ -1945,9 +1975,9 @@ export class GreatPersonDefinitions {
    };
 
    FreemanDyson: IGreatPersonDefinition = {
-      name: () => t(L.FreemanDyson),
+      name: () => $t(L.FreemanDyson),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.DysonSphere.name(),
          }),
@@ -1960,9 +1990,9 @@ export class GreatPersonDefinitions {
    };
 
    VeraRubin: IGreatPersonDefinition = {
-      name: () => t(L.VeraRubin),
+      name: () => $t(L.VeraRubin),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.MatrioshkaBrain.name(),
          }),
@@ -1975,9 +2005,9 @@ export class GreatPersonDefinitions {
    };
 
    GeoffreyHinton: IGreatPersonDefinition = {
-      name: () => t(L.GeoffreyHinton),
+      name: () => $t(L.GeoffreyHinton),
       desc: (self, level) =>
-         t(L.PlusXLevelToXBuilding, {
+         $t(L.PlusXLevelToXBuilding, {
             value: formatNumber(self.value(level)),
             building: Config.Building.Habitat67.name(),
          }),
@@ -2031,7 +2061,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    if (!self.boost) {
       throw new Error("`greatPersonBoostDesc` requires `boost` to be defined");
    }
-   return t(L.BoostDescription, {
+   return $t(L.BoostDescription, {
       value: formatNumber(self.value(level)),
       multipliers: self.boost.multipliers.map((m) => MultiplierTypeDesc[m]()).join(", "),
       buildings: self.boost.buildings.map((b) => Config.Building[b].name()).join(", "),

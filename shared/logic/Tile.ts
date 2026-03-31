@@ -8,11 +8,10 @@ import type { TechAge } from "../definitions/TechDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getCitySize } from "./IntraTickCache";
-import { clearTransportSourceCache } from "./Update";
 
 export interface ITileData {
    tile: Tile;
@@ -34,15 +33,15 @@ export enum BuildingInputMode {
 }
 
 export const BuildingInputModeNames: Map<BuildingInputMode, () => string> = new Map([
-   [BuildingInputMode.Distance, () => t(L.TechResourceTransportPreferenceDistance)],
-   [BuildingInputMode.Amount, () => t(L.TechResourceTransportPreferenceAmount)],
-   [BuildingInputMode.StoragePercentage, () => t(L.TechResourceTransportPreferenceStorage)],
+   [BuildingInputMode.Distance, () => $t(L.TechResourceTransportPreferenceDistance)],
+   [BuildingInputMode.Amount, () => $t(L.TechResourceTransportPreferenceAmount)],
+   [BuildingInputMode.StoragePercentage, () => $t(L.TechResourceTransportPreferenceStorage)],
 ]);
 
 export const BuildingInputModeTooltips: Map<BuildingInputMode, () => string> = new Map([
-   [BuildingInputMode.Distance, () => t(L.TechResourceTransportPreferenceDistanceTooltip)],
-   [BuildingInputMode.Amount, () => t(L.TechResourceTransportPreferenceAmountTooltip)],
-   [BuildingInputMode.StoragePercentage, () => t(L.TechResourceTransportPreferenceStorageTooltip)],
+   [BuildingInputMode.Distance, () => $t(L.TechResourceTransportPreferenceDistanceTooltip)],
+   [BuildingInputMode.Amount, () => $t(L.TechResourceTransportPreferenceAmountTooltip)],
+   [BuildingInputMode.StoragePercentage, () => $t(L.TechResourceTransportPreferenceStorageTooltip)],
 ]);
 
 export enum SuspendedInput {
@@ -357,7 +356,6 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);
    building.productionPriority = clamp(building.productionPriority, PRIORITY_MIN, PRIORITY_MAX);
    building.constructionPriority = clamp(building.constructionPriority, PRIORITY_MIN, PRIORITY_MAX);
-   clearTransportSourceCache();
    return building;
 }
 

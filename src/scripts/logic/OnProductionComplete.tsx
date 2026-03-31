@@ -1,14 +1,17 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    IOFlags,
    addWorkers,
    saviorOnSpilledBloodProductionMultiplier as auroraBorealisProductionMultiplier,
    forEachMultiplier,
    generateScienceFromFaith,
+   getAtlasMountainsRange,
    getAvailableWorkers,
    getBranCastleRequiredWorkers,
    getBuildingCost,
+   getBuildingRange,
    getCathedralOfBrasiliaResources,
    getGreatWallRange,
    getMaxWarpStorage,
@@ -81,7 +84,7 @@ import type {
    ITraditionBuildingData,
    IZugspitzeBuildingData,
 } from "../../../shared/logic/Tile";
-import { addLevelBoost, addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
+import { addLevelBoost, addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
@@ -102,7 +105,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { TileBuildings, client, isAllyWith, populateTileBuildings } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
@@ -132,11 +135,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "Headquarter": {
          mapSafePush(Tick.next.tileMultipliers, xy, {
             output: round(getPermanentGreatPeopleLevel(getGameOptions()) * 0.1, 1),
-            source: t(L.PermanentGreatPeople),
+            source: $t(L.PermanentGreatPeople),
          });
-         if (gs.unlockedUpgrades.SpaceshipIdle) {
-            tickUnlockable(Config.Upgrade.SpaceshipIdle, t(L.WishlistSpaceshipIdle), gs);
-         }
          if (hasFeature(GameFeature.Festival, gs)) {
             if (gs.festival) {
                if ((building.resources.Festival ?? 0) >= FESTIVAL_CONVERSION_RATE) {
@@ -164,13 +164,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(
                   building,
                   { output: TRADE_TILE_BONUS, unstable: true },
-                  `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
+                  `${$t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
                if (wtoLevel > 0) {
                   addMultiplier(
                      building,
                      { output: wtoLevel, unstable: true },
-                     `${t(L.WorldTradeOrganization)} (${i + 1})`,
+                     `${$t(L.WorldTradeOrganization)} (${i + 1})`,
                   );
                }
             }
@@ -189,7 +189,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_ALLY_BONUS, unstable: true },
-                        `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
+                        `${$t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
                         mapSafeAdd(lakeLouiseLevelBoosts, building, TRADE_TILE_ALLY_BONUS);
@@ -198,7 +198,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_NEIGHBOR_BONUS, unstable: true },
-                        `${t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
+                        `${$t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
                      );
                   }
                }
@@ -209,7 +209,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
 
          for (const [building, level] of lakeLouiseLevelBoosts) {
-            addLevelBoost(building, level, t(L.LakeLouise), gs);
+            addLevelBoost(building, level, $t(L.LakeLouise), gs);
          }
 
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
@@ -268,12 +268,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
                   output: mul,
-                  source: t(L.NaturalWonderName, { name: buildingName }),
+                  source: $t(L.NaturalWonderName, { name: buildingName }),
                });
                if (isFestival("Alps", gs)) {
                   mapSafePush(Tick.next.levelBoost, xy, {
                      value: mul,
-                     source: t(L.NaturalWonderName, { name: buildingName }),
+                     source: $t(L.NaturalWonderName, { name: buildingName }),
                   });
                }
             }
@@ -776,7 +776,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                if (isFestival("GreatSphinx", gs)) {
                   mapSafePush(Tick.next.levelBoost, tileXy, {
                      value: count,
-                     source: t(L.NaturalWonderName, { name: buildingName }),
+                     source: $t(L.NaturalWonderName, { name: buildingName }),
                   });
                }
             }
@@ -811,7 +811,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "CristoRedentor": {
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
             Tick.next.happinessExemptions.add(pointToTile(point));
          }
          break;
@@ -831,7 +831,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          const diff = maxTier - minTier;
          if (diff > 0) {
-            for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
                mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
                   output: diff,
                   storage: diff,
@@ -983,7 +983,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             forEach(gs.greatPeople, (gp, level) => {
                if (level > 0) {
                   const def = Config.GreatPerson[gp];
-                  def.tick(gp, 1, `${t(L.Festival)}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+                  def.tick(gp, 1, `${$t(L.Festival)}: ${def.name()}`, GreatPersonTickFlag.Unstable);
                }
             });
          }
@@ -991,7 +991,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "Atomium": {
          let science = 0;
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
             const nxy = pointToTile(point);
             if (nxy !== xy) {
                science += Tick.current.scienceProduced.get(nxy) ?? 0;
@@ -1069,7 +1069,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[trad] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceTradition, { tradition: def.name() }), gs);
             }
          }
          break;
@@ -1089,7 +1088,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[rel] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceReligion, { religion: def.name() }), gs);
             }
          }
          break;
@@ -1109,7 +1107,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[ideo] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceIdeology, { ideology: def.name() }), gs);
             }
          }
          break;
@@ -1614,7 +1611,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                greatPerson.tick(
                   gp,
                   1,
-                  t(L.CambridgeUniversitySource, { age: Config.TechAge[age].name() }),
+                  $t(L.CambridgeUniversitySource, { age: Config.TechAge[age].name() }),
                   GreatPersonTickFlag.None,
                );
             });
@@ -1669,7 +1666,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const ageWisdomLevel = options.ageWisdom[previousAge] ?? 0;
             getGreatPeopleForWisdom(previousAge).forEach((gp) => {
                const greatPerson = Config.GreatPerson[gp];
-               greatPerson.tick(gp, ageWisdomLevel, t(L.DuneOfPilat), GreatPersonTickFlag.Unstable);
+               greatPerson.tick(gp, ageWisdomLevel, $t(L.DuneOfPilat), GreatPersonTickFlag.Unstable);
             });
          }
          break;
@@ -1970,7 +1967,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                greatPerson.tick(
                   gp,
                   level * 0.5,
-                  `${buildingName} (${t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
+                  `${buildingName} (${$t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
                   GreatPersonTickFlag.None,
                );
             });
@@ -2138,7 +2135,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             addMultiplier(
                "Cosmodrome",
                { output: ageWisdomLevel, storage: ageWisdomLevel },
-               `${buildingName} (${t(L.AgeWisdom)})`,
+               `${buildingName} (${$t(L.AgeWisdom)})`,
             );
          }
          break;
@@ -2201,7 +2198,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             addMultiplier(
                "AILab",
                { output: informationAgeWisdomLevel, storage: informationAgeWisdomLevel },
-               `${t(L.AgeWisdom)} (${buildingName})`,
+               `${$t(L.AgeWisdom)} (${buildingName})`,
             );
          }
          const happiness = Tick.current.happiness?.value ?? 0;
@@ -2209,6 +2206,95 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const levelBoost = Math.round(happiness / 5) * multiplier;
          if (levelBoost > 0) {
             addLevelBoost("AILab", levelBoost, buildingName, gs);
+         }
+         break;
+      }
+      case "AtlasMountains": {
+         const range = getAtlasMountainsRange(gs);
+         const resourcesProduced = new Set<Material>();
+         const resourcesConsumed = new Set<Material>();
+         const targets = new Set<Tile>();
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const targetBuilding = getWorkingBuilding(targetXy, gs);
+            if (targetBuilding) {
+               targets.add(targetXy);
+               forEach(Config.Building[targetBuilding.type].input, (res, amount) => {
+                  resourcesConsumed.add(res);
+               });
+               forEach(Config.Building[targetBuilding.type].output, (res, amount) => {
+                  resourcesProduced.add(res);
+               });
+            }
+         }
+         let multiplier = 0;
+         for (const produced of resourcesProduced) {
+            if (!resourcesConsumed.has(produced)) {
+               multiplier++;
+            }
+         }
+         const festival = isFestival(building.type, gs);
+         for (const target of targets) {
+            mapSafePush(Tick.next.tileMultipliers, target, {
+               output: multiplier,
+               source: buildingName,
+               unstable: true,
+            });
+            if (festival) {
+               mapSafePush(Tick.next.levelBoost, target, {
+                  value: multiplier,
+                  source: buildingName,
+               });
+            }
+         }
+
+         break;
+      }
+      case "CothonOfCarthage": {
+         if (gs.unlockedUpgrades.BerberAlliance) {
+            const age = options.ageWisdom.InformationAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("InformationAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.BerberAlliance.name()} (${Config.TechAge.InformationAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
+         }
+         if (gs.unlockedUpgrades.PincerMovement) {
+            const age = options.ageWisdom.IndustrialAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("IndustrialAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.PincerMovement.name()} (${Config.TechAge.IndustrialAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
+         }
+         if (gs.unlockedUpgrades.MediterraneanTrades) {
+            const age = options.ageWisdom.WorldWarAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("WorldWarAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.MediterraneanTrades.name()} (${Config.TechAge.WorldWarAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
          }
          break;
       }

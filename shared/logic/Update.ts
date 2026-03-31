@@ -26,7 +26,7 @@ import {
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import {
    IOFlags,
    addTransportation,
@@ -34,7 +34,7 @@ import {
    deductResources,
    filterNonTransportable,
    filterTransportable,
-   findSpecialBuilding,
+   findSpecialBuildingCached,
    getAvailableResource,
    getAvailableWorkers,
    getBuilderCapacity,
@@ -152,7 +152,9 @@ export function completeTransport(targetBuilding: IBuildingData, resource: Mater
    safeAdd(targetBuilding.resources, resource, amount);
    if (targetBuilding.type === "CloneFactory") {
       const clone = targetBuilding as ICloneBuildingData;
-      clone.transportedAmount += amount;
+      if (clone.inputResource === resource) {
+         clone.transportedAmount += amount;
+      }
    }
 }
 
@@ -236,7 +238,7 @@ export function transportAndConsumeResources(
 
    const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
 
-   if (!transportResource) {
+   if (!transportSourceCache) {
       clearTransportSourceCache();
    }
 
@@ -253,12 +255,12 @@ export function transportAndConsumeResources(
    //    building.desiredLevel = clamp(building.desiredLevel, 0, 1);
    // }
 
-   const bev = getBuildingValue(building);
-   mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
-   mapSafeAdd(Tick.next.buildingValues, building.type, bev);
-
    if (building.type !== "CentrePompidou") {
+      const bev = getBuildingValue(building);
+      mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
+      mapSafeAdd(Tick.next.buildingValues, building.type, bev);
       Tick.next.totalValue += bev;
+      Tick.next.totalBuildingValue += bev;
    }
 
    // Tabulate resources before we early return
@@ -413,7 +415,7 @@ export function transportAndConsumeResources(
    if (gs.unlockedTech.Banking && building.level >= 10) {
       mapSafePush(Tick.next.tileMultipliers, xy, {
          storage: 1,
-         source: t(L.SourceResearch, { tech: t(L.Banking) }),
+         source: $t(L.SourceResearch, { tech: $t(L.Banking) }),
       });
    }
 
@@ -680,7 +682,7 @@ export function transportAndConsumeResources(
          Tick.next.notEnoughPower.add(xy);
       }
       if (Config.Building[building.type].power) {
-         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: t(L.PoweredBuilding) });
+         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: $t(L.PoweredBuilding) });
       }
       if (gs.unlockedUpgrades.Liberalism5) {
          mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: Config.Upgrade.Liberalism5.name() });
@@ -949,6 +951,11 @@ export function transportResource(
          immediate = true;
       }
 
+      const hafsid = gs.unlockedUpgrades.HafsidDynasty;
+      if (hafsid && grid.distanceTile(from, targetXy) <= 3) {
+         immediate = true;
+      }
+
       if (toBuildingType && Config.Building[toBuildingType].output.Worker) {
          transportCapacity = Number.POSITIVE_INFINITY;
       }
@@ -990,12 +997,12 @@ export function transportResource(
 }
 
 export function addMultiplier(k: Building, multiplier: MultiplierWithStability, source: string): void {
-   let m = Tick.next.buildingMultipliers.get(k);
+   let m = Tick.next._buildingMultipliers.get(k);
    if (m == null) {
       m = [];
    }
    m.push({ ...multiplier, source });
-   Tick.next.buildingMultipliers.set(k, m);
+   Tick.next._buildingMultipliers.set(k, m);
 }
 
 export function addLevelBoost(building: Building, value: number, source: string, gs: GameState): void {
@@ -1021,7 +1028,7 @@ export function tickPrice(gs: GameState) {
       OnPriceUpdated.emit(gs);
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
-   const grandBazaar = findSpecialBuilding("GrandBazaar", gs);
+   const grandBazaar = findSpecialBuildingCached("GrandBazaar", gs);
    const grid = getGrid(gs);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
       const building = gs.tiles.get(xy)?.building;
